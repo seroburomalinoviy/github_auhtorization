@@ -1,4 +1,5 @@
 env
 db.sqlite
 generated_code.txt
-
+db.sqlite
+__pycache__
