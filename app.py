@@ -58,7 +58,6 @@ def oauth_callback(provider):
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
     oauth = OAuthSignIn.get_provider(provider)
-    #social_id, username, email = oauth.callback()
     social_id, username, email = oauth.callback()
     if social_id is None:
         flash('Authentication failed.')
@@ -71,13 +70,7 @@ def oauth_callback(provider):
     login_user(user, True)
     return redirect(url_for('index'))
 
-
-#def auth_code():
-#    code = uuid.uuid1()
-#    users = User.query.filter_by(social_id=social_id).all()
-#    for user in users:
-#        user.code = code
-            	
+       	
 
 if __name__ == '__main__':
     db.create_all()
