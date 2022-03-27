@@ -1,20 +1,20 @@
 <html>
     <head>
-        <title>OAuth Flask Demo</title>
+        <title>OAuth Flask</title>
     </head>
     <body>
-        <h1>OAuth Demo</h1>
+        <h1>Webim OAuth</h1>
         {% for message in get_flashed_messages() %}
             <p><b>Error</b>: {{ message }}</p>
         {% endfor %}
         {% if current_user.is_authenticated %}
-            <h2>Hi, {{ current_user.nickname }}!</h2>
+            <h2>Hi, {{ current_user.nick }}!</h2>
+            <h3>User code: {{ code }}</h3>
+            <p>System information: </p>
             <p><a href="{{ url_for('logout') }}">Logout</a></p>
         {% else %}
             <h2>I don't know you!</h2>
-            <p><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Login with Facebook</a></p>
-            <p><a href="{{ url_for('oauth_authorize', provider='twitter') }}">Login with Twitter</a></p>
-<p><a href="{{ url_for('oauth_authorize', provider='github') }}">Login with GitHub</a></p>
+            <p><a href="{{ url_for('oauth_authorize', provider='github') }}">Login with GitHub</a></p>
         {% endif %}
     </body>
 </html>

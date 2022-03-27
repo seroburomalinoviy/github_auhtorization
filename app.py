@@ -9,14 +9,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['OAUTH_CREDENTIALS'] = {
-    'facebook': {
-        'id': '470154729788964',
-        'secret': '010cc08bd4f51e34f3f3e684fbdea8a7'
-    },
-    'twitter': {
-        'id': '3RzWQclolxWZIMq5LJqzRZPTl',
-        'secret': 'm9TEd58DSEtRrZHpz2EjrV9AhsBRxKMo8m3kuIZj3zLwzwIimt'
-    },
     'github': {
         'id': '08e8229b24da3e7f2c95',
         'secret': '8a3afa14a6f88588779017837a74fb87d9b8248d'
@@ -27,12 +19,11 @@ db = SQLAlchemy(app)
 lm = LoginManager(app)
 lm.login_view = 'index'
 
-
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    social_id = db.Column(db.String(64), nullable=False, unique=True)
-    nickname = db.Column(db.String(64), nullable=False)
+    social_id = db.Column(db.String(64), nullable=False, unique=True) # уникальный id, который генерирую при авторизации пользователя
+    nick = db.Column(db.String(64) ,nullable=False)
     email = db.Column(db.String(64), nullable=True)
 
 
@@ -43,7 +34,9 @@ def load_user(id):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    with open('generated_code.txt', 'r') as f:
+        generated_code = f.readline()
+    return render_template('index.html', code=generated_code)
 
 
 @app.route('/logout')
@@ -65,18 +58,26 @@ def oauth_callback(provider):
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
     oauth = OAuthSignIn.get_provider(provider)
+    #social_id, username, email = oauth.callback()
     social_id, username, email = oauth.callback()
     if social_id is None:
         flash('Authentication failed.')
         return redirect(url_for('index'))
     user = User.query.filter_by(social_id=social_id).first()
     if not user:
-        user = User(social_id=social_id, nickname=username, email=email)
+        user = User(social_id=social_id, nick=username, email=email)
         db.session.add(user)
         db.session.commit()
     login_user(user, True)
     return redirect(url_for('index'))
 
+
+#def auth_code():
+#    code = uuid.uuid1()
+#    users = User.query.filter_by(social_id=social_id).all()
+#    for user in users:
+#        user.code = code
+            	
 
 if __name__ == '__main__':
     db.create_all()
