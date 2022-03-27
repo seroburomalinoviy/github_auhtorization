@@ -36,7 +36,9 @@ def load_user(id):
 def index():
     with open('generated_code.txt', 'r') as f:
         generated_code = f.readline()
-    return render_template('index.html', code=generated_code)
+    with open('sys_info.txt', 'r') as f:
+        info = f.readlines()
+    return render_template('index.html', code=generated_code, info=info)
 
 
 @app.route('/logout')

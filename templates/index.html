@@ -10,7 +10,10 @@
         {% if current_user.is_authenticated %}
             <h2>Hi, {{ current_user.nick }}!</h2>
             <h3>User code: {{ code }}</h3>
-            <p>System information: </p>
+            <p>System information:</p>
+            {% for str_info in info %}
+                <p>{{ str_info }}</p>
+            {% endfor %}
             <p><a href="{{ url_for('logout') }}">Logout</a></p>
         {% else %}
             <h2>I don't know you!</h2>
