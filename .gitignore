@@ -3,3 +3,4 @@ db.sqlite
 generated_code.txt
 db.sqlite
 __pycache__
+sys_info.txt
