@@ -1,0 +1,9 @@
+   Static hostname: p615901.kvmvps
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: 2ef2b00806654ca6a9054009b3cf2e76
+           Boot ID: 6193309a49b04065abb3bb2bae561baf
+    Virtualization: microsoft
+  Operating System: Ubuntu 18.04.6 LTS
+            Kernel: Linux 4.15.0-34-generic
+      Architecture: x86-64
