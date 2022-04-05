@@ -48,7 +48,7 @@ class GithubSignIn(OAuthSignIn):
 
     def authorize(self):
         return redirect(self.service.get_authorize_url(
-            scope=['user:email', 'user:name'],
+            #scope=['user:email', 'user:name'],
             #response_type='code',
             redirect_uri=self.get_callback_url())
         )
@@ -74,7 +74,5 @@ class GithubSignIn(OAuthSignIn):
         )
         me = oauth_session.get('https://api.github.com/user',params={'format': 'json'} ).json()
         return (
-            'github$' + str(me['id']),
-            me['name'],          
-            me.get('name')
+            'github$' + str(me['id'])
         )

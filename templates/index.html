@@ -8,7 +8,7 @@
             <p><b>Error</b>: {{ message }}</p>
         {% endfor %}
         {% if current_user.is_authenticated %}
-            <h2>Hi, {{ current_user.nick }}!</h2>
+            <h2>Hi, nice to meet you!</h2>
             <h3>User code: {{ code }}</h3>
             <p>System information:</p>
             {% for str_info in info %}

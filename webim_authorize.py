@@ -23,8 +23,8 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     social_id = db.Column(db.String(64), nullable=False, unique=True) # uniq id
-    nick = db.Column(db.String(64) ,nullable=False)
-    email = db.Column(db.String(64), nullable=True)
+    #nick = db.Column(db.String(64) ,nullable=False)
+    #email = db.Column(db.String(64), nullable=True)
 
 
 @lm.user_loader
@@ -60,13 +60,13 @@ def oauth_callback(provider):
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
     oauth = OAuthSignIn.get_provider(provider)
-    social_id, username, email = oauth.callback()
+    social_id = oauth.callback()
     if social_id is None:
         flash('Authentication failed.')
         return redirect(url_for('index'))
     user = User.query.filter_by(social_id=social_id).first()
     if not user:
-        user = User(social_id=social_id, nick=username, email=email)
+        user = User(social_id=social_id)
         db.session.add(user)
         db.session.commit()
     login_user(user, True)
@@ -76,4 +76,4 @@ def oauth_callback(provider):
 
 if __name__ == '__main__':
     db.create_all()
-    app.run(host="2.56.91.105")
+    app.run(host="0.0.0.0")
